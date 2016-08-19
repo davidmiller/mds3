@@ -1,0 +1,84 @@
+<div class="container content-offset">
+  <div class="panel panel-primary">
+    <!-- Default panel contents -->
+    <div class="panel-heading">
+      <h2>
+        <i class="fa fa-home"></i>
+        Welcome to {{ OPAL_BRAND_NAME }}.
+      </h2>
+    </div>
+
+    <div class="panel-body">
+      <div class="row">
+        <div class="col-md-6 col-sm-6">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h3>Register</h3>
+            </div>
+            <div class="panel-body">
+              <div class="row">
+                <div class="col-md-6">
+                  <p>
+                    <a href="/register/">
+                      <i class="fa fa-user fa-5x fa-border"></i>
+                    </a>
+                  </p>
+                </div>
+                <div class="col-md-6">
+                  <a href="/register/" class="btn btn-primary btn-lg">
+                    <i class="fa fa-arrow-right"></i>
+                    Register new Patient
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-sm-6">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h3>View</h3>
+            </div>
+            <div class="panel-body">
+              <div class="row">
+                <div class="col-md-6">
+                  <p>
+                    <a href="/view-patients/">
+                      <i class="fa fa-users fa-5x fa-border"></i>
+                    </a>
+                  </p>
+                </div>
+                <div class="col-md-6">
+                  <a href="/view-patients/" class="btn btn-primary btn-lg">
+                    <i class="fa fa-arrow-right"></i>
+                    View Patients
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    {% if patients %}
+    <table class="table">
+      <tr>
+        <th>ID</th>
+        <th>Hosp #</th>
+        <th>First Name</th>
+        <th>Surname</th>
+      </tr>
+      {% for p in patients %}
+        <tr>
+            <td>{{ p.patient.pk }}</td>
+            <td><a href="/patient/{{ p.patient.pk}}/">{{ p.hospital_number }}</a></td>
+            <td>{{ p.first_name }}</td>
+            <td>{{ p.surname }}</td>
+          </a>
+      </tr>
+      {% endfor %}
+    </table>
+    {% endif %}
+  </div>

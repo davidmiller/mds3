@@ -1,0 +1,7 @@
+
+{% if item.date_of_diagnosis %}{{item.date_of_diagnosis }}{% endif %}
+{% if item.provisional %}?{% endif %}
+{{item.condition}}
+{% if item.details %}
+({{item.details}})
+{% endif %}

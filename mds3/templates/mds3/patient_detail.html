@@ -1,0 +1,87 @@
+{% extends 'opal.html' %}
+{% block content %}
+{% load panels %}
+{% load forms %}
+<div class="container-fluid content-offset">
+  <div class="panel panel-primary panel-container">
+    <!-- Default panel contents -->
+    <div class="panel-heading">
+      <h1>
+        {% block heading %}{% icon 'fa-user' %}
+          {{ demographics.first_name }} {{ demographics.surname }}
+        {% endblock %}
+        <small>
+          {% block subheading %}
+          ({{ demographics.date_of_birth }})
+            {{ demographics.hospital_number }}
+          {% endblock %}
+        </small>
+      </h1>
+    </div>
+
+    <div class="panel-body">
+      <div class="row">
+        <div class="col-md-3"> <!-- Episode Switcher -->
+          {% block pre_demographics %}{% endblock %}
+          {% block demographics %}
+            {% include 'partials/_demographics_panel.html' %}
+          {% endblock %}
+          {% block post_demographics %}{% endblock %}
+
+          {% if detail_views|length > 0 %}
+          <div class="panel panel-default">
+            <div class="panel-heading ">
+              <h3>
+                <i class="fa fa-list-alt"></i>
+                Views
+              </h3>
+            </div>
+            <div class="list-group">
+              {% for detail in detail_views %}
+              <a class="list-group-item episodelist pointer"
+                 ng-class="{'bg-active': view == '{{ detail.get_slug}}'}"
+                 ng-click="switch_to_episode(0, $event) && switch_to_view('{{ detail.get_slug }}')"
+                 href="[[ '/#/patient/' + patient.id + '/{{ detail.get_slug }}' ]]"
+                 >
+                {{ detail.display_name }}
+              </a>
+              {% endfor %}
+              {% block viewnavigation %}{% endblock %}
+            </div>
+          </div>
+          {% endif %}
+        </div> <!-- End episode switcher -->
+        <div class="col-md-9">
+          <div class="col-md-12">
+            <div class="row">
+              <div class="col-md-6">
+
+                <div class="panel panel-default">
+                  <div class="panel-heading">
+                    <h3><i class="{{ models.Diagnosis.get_icon }}"></i> {{models.Diagnosis.get_display_name }}</h3>
+                  </div>
+                  <ul class="list-group">
+                    {% for item in diagnoses %}
+                    <li class="list-group-item">
+                      {% include models.Diagnosis.get_display_template with item=item %}
+                    </li>
+                    {% endfor %}
+                  </ul>
+                </div>
+
+              </div>
+            </div>
+            {% block viewtemplates %}{% endblock %}
+          </div>
+        </div>
+
+      </div> <!-- Ends Main Panel -->
+
+
+    </div>
+
+  </div> <!-- Panel body -->
+
+</div>   <!-- Panel -->
+</div>     <!-- Container -->
+{% endblock %}
